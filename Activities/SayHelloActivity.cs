@@ -6,15 +6,15 @@ using System.Text;
 
 namespace CoreWF.Evaluation.Activities
 {
-    public class SayHelloActivity : CodeActivity
+    public class SayHelloActivity : CodeActivity<string>
     {
         public InArgument<string> Message { get; set; }
         
-        protected override void Execute(CodeActivityContext context)
+        protected override string Execute(CodeActivityContext context)
         {
             string message = Message.Get(context);
 
-            Debug.WriteLine(message);
+            return message;
         }
     }
 }
