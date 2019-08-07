@@ -17,7 +17,7 @@ namespace CoreWF.Evaluation.Tests
 
             SayHelloActivity activity = new SayHelloActivity()
             {
-                Message = new CoreWf.InArgument<string>(context => value)
+                Message = new InArgument<string>(context => value)
             };
 
             var result = WorkflowInvoker.Invoke(activity);
