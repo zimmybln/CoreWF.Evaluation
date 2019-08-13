@@ -74,7 +74,7 @@ namespace CoreWF.Evaluation.Tests
                     {
                         Text = "Der Workflow wurde gestartet"
                     },
-                    new PersistableActivity(){},
+                    new Delay { Duration = new InArgument<TimeSpan>(a => TimeSpan.FromSeconds(5)) },
                     new WriteLine()
                     {
                         Text = "Der Workflow wurde beendet"
@@ -96,7 +96,7 @@ namespace CoreWF.Evaluation.Tests
             workflowApplicationSave.PersistableIdle += args => PersistableIdleAction.Unload;
             workflowApplicationSave.Aborted += args => workflowDoneSave.Set();
             workflowApplicationSave.Unloaded += args => workflowDoneSave.Set();
-
+            
             workflowId = workflowApplicationSave.Id;
             workflowApplicationSave.Run();
             workflowDoneSave.WaitOne();
