@@ -118,5 +118,41 @@ namespace CoreWF.Evaluation.Tests
             workflowDoneLoad.WaitOne();
 
         }
+
+        [Fact]
+        public void EmbraceWithCustomSequence()
+        {
+            int result = 0;
+
+            // Definition der Ausführung
+            CustomSequence activity = new CustomSequence()
+            {
+                Activities =
+                {
+                    new SayHelloActivity()
+                    {
+                        Message = "Ausführung in einer kombinierten Sequenz"
+                    }
+                }
+            };
+
+            WorkflowApplication workflowApplication = new WorkflowApplication(activity);
+
+            ManualResetEvent workflowDone = new ManualResetEvent(false);
+
+            workflowApplication.Completed += delegate (WorkflowApplicationCompletedEventArgs args)
+            {
+                workflowDone.Set();
+            };
+
+            workflowApplication.Aborted += delegate (WorkflowApplicationAbortedEventArgs args)
+            {
+                workflowDone.Set();
+            };
+
+            // Ausführen und warten
+            workflowApplication.Run();
+            workflowDone.WaitOne();
+        }
     }
 }
