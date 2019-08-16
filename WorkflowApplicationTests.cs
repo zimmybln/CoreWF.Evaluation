@@ -22,11 +22,11 @@ namespace CoreWF.Evaluation.Tests
         [Fact]
         public void OutputEqualsInput()
         {
-            string value = "Das ist ein Test";
+            string value = "Hans Mustermann";
 
             SayHelloActivity activity = new SayHelloActivity()
             {
-                Message = new InArgument<string>(context => value)
+                Name = new InArgument<string>(context => value)
             };
 
             WorkflowApplication workflowApplication = new WorkflowApplication(activity);
@@ -51,7 +51,7 @@ namespace CoreWF.Evaluation.Tests
             workflowApplication.Run();
             workflowDone.WaitOne();
             
-            Assert.Equal(value, result);
+            Assert.Equal($"Hallo {value}", result);
 
             
         }
